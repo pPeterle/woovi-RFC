@@ -29,9 +29,6 @@ To achieve the objectives, data ingestion can be performed:
 
 The next step is to process, normalize, and transform the data to facilitate analysis. This step depends on how data is structured in each application.
 
-- Streaming -> Apache Flink
-- Batch -> Apache Spark
-
 ### Anomaly and Fraud Detection
 
 Once the data is "clean", anomaly and fraud detection must be performed. There are several possible approaches:
