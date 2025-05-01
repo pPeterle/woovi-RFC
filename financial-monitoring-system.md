@@ -43,6 +43,14 @@ Once the data is "clean", anomaly and fraud detection must be performed. There a
 
 All suspicious transactions are **flagged**, indicating the level of potential risk.
 
+## Security
+
+- Authentication for client and brokers and RBAC
+- Enable ACLs
+- SASL
+- TLS data transition
+- VPC to restrict acces
+
 ## Design
 
 I chose the technologies with a focus on being open source and deployable on any cloud platform. The design was created to facilitate fraud detection, which will be carried out using Apache Flink—ideal for real-time data processing—receiving transaction events through Apache Kafka. 
