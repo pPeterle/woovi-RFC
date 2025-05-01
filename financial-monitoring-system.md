@@ -17,15 +17,19 @@ The goal is to create an architecture that is decoupled from the current codebas
 Kappa Architecture is a streamlined data processing model designed for real-time data handling, using a single stream processing layer instead of separate batch and streaming layers like in Lambda Architecture.
 It processes all data as a continuous stream, allowing historical data to be reprocessed by replaying it through the stream. This approach simplifies system design and reduces maintenance complexity
 
-
 ### Data Ingestion
 
 To achieve the objectives, data ingestion can be performed:
 
 - Through **streaming**, to identify in real time whether a transaction is fraudulent. 
-- **At the end of the day**, by validating Woovi's entire *ledger* to ensure that customer wallets and Woovi’s wallet are in sync. (Daily Reconciliation)
+- **At the end of the day**, by validating Woovi's entire *ledger* to ensure that customer wallets and Woovi’s wallet are in sync (Daily Reconciliation).
+
+Thi step is realized with Apache Kafka, because of high throughput, low latency, and strong durability, making it ideal for real-time data pipelines.
 
 ### Processing, Normalization, and Transformation
+
+All the following steps are performed in Apache Flink, which is highly effective for data processing, normalization, and transformation due to its real time stream processing capabilities, low latency, and support for complex semantics.
+It enables precise handling of data with features like stateful processing, windowing, and exactly once guarantees.
 
 The next step is to process, normalize, and transform the data to facilitate analysis. This step depends on how data is structured in each application.
 
