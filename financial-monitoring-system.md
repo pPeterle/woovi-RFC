@@ -22,7 +22,6 @@ It processes all data as a continuous stream, allowing historical data to be rep
 To achieve the objectives, data ingestion can be performed:
 
 - Through **streaming**, to identify in real time whether a transaction is fraudulent. 
-- **At the end of the day**, by validating Woovi's entire *ledger* to ensure that customer wallets and Woovi’s wallet are in sync (Daily Reconciliation).
 
 Thi step is realized with Apache Kafka, because of high throughput, low latency, and strong durability, making it ideal for real-time data pipelines.
 
@@ -57,8 +56,9 @@ All suspicious transactions are **flagged**, indicating the level of potential r
 
 ## Design
 
-I chose the technologies with a focus on being open source and deployable on any cloud platform. The design was created to facilitate fraud detection, which will be carried out using Apache Flink—ideal for real-time data processing—receiving transaction events through Apache Kafka. 
-For the Daily Reconciliation scenario, it is recommended to use Airflow to manage task scheduling, allowing the creation of wallet validation routines. As the data is handled and processed, it should be stored in different databases to facilitate data analysis. It is crucial to maintain a clear distinction between processed and unprocessed data.
+I chose the technologies with a focus on being open source and deployable on any cloud platform. The design was created to facilitate fraud detection, which will be carried out using Apache Flink, ideal for real-time data processing—receiving transaction events through Apache Kafka. 
+As the data is handled and processed, it should be stored in different databases to facilitate data analysis. It is crucial to maintain a clear distinction between processed and unprocessed data.
 
-![image](https://github.com/user-attachments/assets/5419b25c-7fba-45bf-8b41-b3a4cd836bc0)
+![image](https://github.com/user-attachments/assets/137439e9-f815-49cb-847c-3da848fbad12)
+
 
