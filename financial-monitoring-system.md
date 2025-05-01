@@ -30,8 +30,6 @@ Thi step is realized with Apache Kafka, because of high throughput, low latency,
 All the following steps are performed in Apache Flink, which is highly effective for data processing, normalization, and transformation due to its real time stream processing capabilities, low latency, and support for complex semantics.
 It enables precise handling of data with features like stateful processing, windowing, and exactly once guarantees.
 
-The next step is to process, normalize, and transform the data to facilitate analysis. This step depends on how data is structured in each application.
-
 ### Anomaly and Fraud Detection
 
 Once the data is "clean", anomaly and fraud detection must be performed. There are several possible approaches:
