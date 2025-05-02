@@ -15,15 +15,15 @@ The goal is to create an architecture that is decoupled from the current codebas
 ### Kappa Architeture
 
 Kappa Architecture is a streamlined data processing model designed for real-time data handling, using a single stream processing layer instead of separate batch and streaming layers like in Lambda Architecture.
-It processes all data as a continuous stream, allowing historical data to be reprocessed by replaying it through the stream. This approach simplifies system design and reduces maintenance complexity
+It processes all data as a continuous stream, allowing historical data to be reprocessed by replaying it through the stream. This approach simplifies system design and reduces maintenance complexity.
 
 ### Data Ingestion
+To achieve the objectives, data ingestion can be performed in two ways:
 
-To achieve the objectives, data ingestion can be performed:
+- **Streaming**: Used to identify in real time whether a transaction is fraudulent.
+- **Cron Job**: Daily checks for discrepancies between Woovi's and the client's balances. If any inconsistencies are found, an event is published to Kafka to review all transactions, identify the fraudulent one, and notify the team.
 
-- Through **streaming**, to identify in real time whether a transaction is fraudulent. 
-
-Thi step is realized with Apache Kafka, because of high throughput, low latency, and strong durability, making it ideal for real-time data pipelines.
+The streaming step is implemented using Apache Kafka due to its high throughput, low latency, and strong durability, making it ideal for real-time data pipelines. The cron job can be implemented in any language; however, using Airflow is recommended to manage and orchestrate all cron jobs more efficiently.
 
 ### Processing, Normalization, and Transformation
 
@@ -42,7 +42,7 @@ Once the data is "clean", anomaly and fraud detection must be performed. There a
 
 ### Classification of Suspicious Transactions
 
-All suspicious transactions are **flagged**, indicating the level of potential risk.
+All suspicious transactions are **flagged**, indicating the level of potential risk and is sent notification based on that level, requiring manual review to confirm the fraud. The result of the manual review is used to improve the AI and new event is published on Kafka for the application block the transaction and notify the user.
 
 ## Security
 
@@ -52,11 +52,22 @@ All suspicious transactions are **flagged**, indicating the level of potential r
 - TLS data transition
 - VPC to restrict acces
 
+## Databases
+
+Para facilitar a análise de dados é crucial dividir a base de dados em três níveis:
+
+- Raw Data: todo o dado gerado pela aplicação que ainda não foi tratado
+- Clean Data: O dado que já passou pelo Apache Flink e foi tratado.
+- Curated Data: O resultado do Apache Flink que contém todo o resultado da análise.
+
+The database chosen for this scenario was MongoDB, to maintain consistency with the application's existing use and to facilitate adoption by the team. Typically, in Big Data scenarios involving massive volumes of data, other options are considered, such as Cassandra, which is widely used in applications that require distributed storage and high scalability. However, since Woovi's context is primarily based in Brazil, I don't see the need to use any database other than MongoDB.
+
 ## Design
 
 I chose the technologies with a focus on being open source and deployable on any cloud platform. The design was created to facilitate fraud detection, which will be carried out using Apache Flink, ideal for real-time data processing—receiving transaction events through Apache Kafka. 
 As the data is handled and processed, it should be stored in different databases to facilitate data analysis. It is crucial to maintain a clear distinction between processed and unprocessed data.
 
-![image](https://github.com/user-attachments/assets/137439e9-f815-49cb-847c-3da848fbad12)
+<img width="1097" alt="image" src="https://github.com/user-attachments/assets/9227ed37-20d5-49b4-b636-be92f2753788" />
+
 
 
